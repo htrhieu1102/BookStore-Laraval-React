@@ -1,6 +1,14 @@
 import { Form, Button } from 'react-bootstrap'
 
 export const Login = () => {
+
+	const emailRef = useRef();
+	const passwordRef = useRef();
+
+	const onSubmit = (ev) => {
+		
+	}
+
 	return (
 		<section class="bg-light py-3 py-md-5">
 			<div class="container">
@@ -14,7 +22,7 @@ export const Login = () => {
 									</a>
 								</div>
 								<h2 class="fs-6 fw-normal text-center text-secondary mb-4">Sign in to your account</h2>
-								<form action="#!">
+								<form onSubmit={onSubmit}>
 									<div class="row gy-2 overflow-hidden">
 										<div class="col-12">
 											<div class="form-floating mb-3">

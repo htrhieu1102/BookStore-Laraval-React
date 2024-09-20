@@ -1,12 +1,25 @@
 import axios from 'axios'
 
 const axiosClient = axios.create({
-	baseURL: import.meta.env.API_BASE_URL
+	
+	baseURL: `http://localhost:8000/api`
 })
 
 axiosClient.interceptors.request.use((config) => {
 	const token = localStorage.getItem('ACCESS_TOKEN')
 	config.headers.Authorization = `Bareer `
+	return config;
 })
+axiosClient.interceptors.response.use((response) => {
+	return response;
+}, (error) => {
+	const {response} = error;
+	if (response.status === 401) {
+		localStorage.removeItem('ACCESS_TOKEN')
+	}
+	throw error;
+}
+
+)
 
 export default axiosClient;
