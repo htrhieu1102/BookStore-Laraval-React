@@ -3,8 +3,6 @@ import axiosClient from '../axios-client';
 import { useStateConText } from '../contexts/ContextProvider';
 
 export const Register = () => {
-	console.log(import.meta.env.VITE_API_BASE_URL);
-	
 	const nameRef = useRef();
 	const emailRef = useRef();
 	const passwordRef = useRef();
@@ -20,7 +18,6 @@ export const Register = () => {
 			password: passwordRef.current.value,
 			password_confirmation: passwordConfirmRef.current.value,
 		}
-		console.log(payload);
 		axiosClient.post('/signup', payload)
 			.then(({data})=> {
 				setUser(data.user)
