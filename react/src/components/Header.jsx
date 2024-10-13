@@ -1,10 +1,38 @@
+import { useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import axiosClient from '../axios-client';
 
 export const Header = () => {
+	const [cats, setCats] = useState([])	
+	const [showDropdowns, setShowDropdowns] = useState({});
+
+	const showDropdown = (index) => {
+		setShowDropdowns(prev => ({ ...prev, [index]: true }));
+	};
+
+	const hideDropdown = (index) => {
+		setShowDropdowns(prev => ({ ...prev, [index]: false }));
+	};
+
+	const api = () => {
+		axiosClient.get('/cats-with-children')
+			.then(({data})=> {
+				console.log(data);
+				setCats(data);
+			})
+			.catch(err=>{
+				console.error();
+			})
+	}
+	useEffect(()=> {
+		api()
+	}, [])
+
+
 	return (
 		<header>
 			<Navbar expand="lg" className="bg-body-tertiary" fixed='top'>
@@ -17,21 +45,16 @@ export const Header = () => {
 							style={{ maxHeight: '100px' }}
 							navbarScroll
 						>
-							<Nav.Link href="#action1">Home</Nav.Link>
-							<Nav.Link href="#action2">Link</Nav.Link>
-							<NavDropdown title="Link" id="navbarScrollingDropdown">
-								<NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-								<NavDropdown.Item href="#action4">
-									Another action
-								</NavDropdown.Item>
-								<NavDropdown.Divider />
-								<NavDropdown.Item href="#action5">
-									Something else here
-								</NavDropdown.Item>
-							</NavDropdown>
-							<Nav.Link href="#" disabled>
-								Link
-							</Nav.Link>
+							{cats.map((item, index) => (
+								<NavDropdown key={index} title={item.name} id="navbarScrollingDropdown" 
+									show={showDropdowns[index]}
+									onMouseEnter={() => showDropdown(index)}
+									onMouseLeave={() => hideDropdown(index)}>
+									{item.children.map((item, index)=> (
+										<NavDropdown.Item key={index} href="#action3">{item.name}</NavDropdown.Item>
+									))}
+								</NavDropdown>
+							))}
 						</Nav>
 						<Form className="d-flex">
 							<Form.Control

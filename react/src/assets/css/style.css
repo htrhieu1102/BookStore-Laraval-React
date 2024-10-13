@@ -1,0 +1,26 @@
+
+.breadcrumb li {
+	position: relative;
+}
+.breadcrumb li:first-child{
+	color: #0f6c32;
+}
+
+.breadcrumb li:not(:first-child) {
+	color: #757575;
+	margin-left: 15px;
+}
+.breadcrumb li:not(:first-child)::before {
+	content: "";
+	width: 7px;
+	height: 7px;
+	border-top: 1px solid #bdbdbd;
+	border-right: 1px solid #bdbdbd;
+	transform: rotate(45deg);
+	position: absolute;
+	left: -15px;
+	top: 10px;
+}
+.time-content {
+	color: #757575;
+}
