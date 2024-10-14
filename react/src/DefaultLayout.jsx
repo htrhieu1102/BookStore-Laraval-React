@@ -5,9 +5,9 @@ import { useStateConText } from "./contexts/ContextProvider"
 export const DefaultLayout = () => {
 	const {user, token} = useStateConText()
 
-	if(!token) {
-		return <Navigate to={'/login'}/>
-	}
+	// if(!token) {
+	// 	return <Navigate to={'/login'}/>
+	// }
 	
 
 	return (
