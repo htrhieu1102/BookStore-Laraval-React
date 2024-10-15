@@ -5,6 +5,7 @@ import { Login } from './views/Login';
 import { Register } from './views/Register';
 import { Home } from './views/Home';
 import { Detail } from './views/Detail';
+import { User } from './views/User';
 
 const router = createBrowserRouter([
 	{
@@ -15,7 +16,8 @@ const router = createBrowserRouter([
 			{path: '/', element: <Home/>},
 			{path: '/detail/:slug', element: <Detail/>},
 			{path: '/login', element: <Login/>},
-			{path: 'register', element: <Register/>}
+			{path: 'register', element: <Register/>},
+			{ path: 'user', element: <User /> },
 		]
 	}
 ])
