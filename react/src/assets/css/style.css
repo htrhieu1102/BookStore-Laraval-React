@@ -91,12 +91,77 @@
     padding: 8px;
     color: #58cefa;
 }
+
 .nav-item {
     margin-bottom: 8px;
     font-size: 14px;
     font-weight: 600;
 }
+
 .nav-item .active {
     background: rgba(255, 255, 255, .2);
     color: #fff;
+}
+
+.tab-pane {
+    padding: 24px;
+}
+
+.tab-pane .title-content {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 24px;
+    color: #292929;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.tab-pane .label {
+    height: 20px;
+    margin-bottom: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #292929;
+}
+
+.tab-pane .input {
+    background-color: #ffffff;
+    color: black;
+    border: 1px solid #ebebeb;
+    border-radius: 4px;
+    padding: 8px;
+    height: 38px;
+    width: 100%;
+}
+
+.tab-pane .list-radio {
+    display: flex;
+    align-items: center;
+    height: 38px;
+}
+
+.tab-pane .list-radio input[type="radio"] {
+    margin-right: 4px;
+    color-scheme: #fff; 
+}
+
+.tab-pane .list-radio label {
+    margin-right: 20px;
+}
+
+.tab-pane select {
+    border: 1px solid #ebebeb;
+    border-radius: 4px;
+    padding: 8px;
+    height: 38px;
+    width: 100%;
+    
+}
+.tab-pane select option {
+    color-scheme: #fff;
+}
+.tab-pane .row {
+    margin-bottom: 30px;
 }
