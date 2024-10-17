@@ -135,7 +135,6 @@
     height: 38px;
     width: 100%;
 }
-
 .tab-pane .list-radio {
     display: flex;
     align-items: center;
@@ -164,4 +163,19 @@
 }
 .tab-pane .row {
     margin-bottom: 30px;
+}
+.tab-pane textarea {
+    height: 100px !important;
+}
+.choose-file {
+    position: relative;
+}
+.choose-file input[type='file'] {
+    color: transparent;
+}
+.file {
+    position: absolute;
+    top: 48%;
+    left: 39%;
+    /* transform: translate(-50%, -50%); */
 }
