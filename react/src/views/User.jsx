@@ -1,9 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Tab, Nav, Row, Col } from 'react-bootstrap'
-import { FaRegFile } from "react-icons/fa";
+import axiosClient from '../axios-client';
+import {useForm} from 'react-hook-form'
 export const User = () => {
 	const currentYear = new Date().getFullYear();
 	const [image, setImage] = useState(null);
+	// const [selectedParentCat, setSelectedParentCat] = useState(null);
+	const [parentCat, setParentCat] = useState([])
+	const [subCat, setSubCat] = useState([]);
+	// Tạo HookForm
+	const {register: createArticle, handleSubmit: submitArticle, formState: {errors}} = useForm();
 
 	// Hàm xử lý khi người dùng chọn file
 	const handleImageChange = (e) => {
@@ -13,6 +19,42 @@ export const User = () => {
 			setImage(imageURL); // Cập nhật ảnh vào state
 		}
 	};
+	const changeSubCat = (event) => {
+		const selectedParentCat = parentCat.find(cat => cat.id === (parseInt(event.target.value)))
+		setSubCat(selectedParentCat.children)
+
+	}
+	// api create article
+	const apiCreateArticle = (data) => {
+		data.image = data.image[0].name
+		axiosClient.post('/articles', data)
+			.then(({data}) => {
+				console.log(data);
+			})
+			.catch( error => {
+				console.log(error);
+				
+			})
+	}
+	// api get category
+	const apiParentCat = async () => {
+		await axiosClient.get('/cats-with-children')
+			.then(({ data }) => {
+				console.log(data);
+				setParentCat(data);
+				setSubCat(data[0].children)
+				
+			})
+			.catch(err => {
+				console.error();
+			})
+	}
+	useEffect(() => {
+		apiParentCat();
+		
+	}, [])
+	useEffect(() => {
+	}, [parentCat, subCat]);
 	return (
 		<div className="main">
 			<div className="container">
@@ -50,13 +92,36 @@ export const User = () => {
 							<Tab.Content>
 								<Tab.Pane eventKey="create-article">
 									<p className="title-content">Đăng bài báo</p>
-									<form action="">
+									<form action="" onSubmit={submitArticle(apiCreateArticle)}>
 										<div className="row">
 											<div className="col-6">
 												<p className="label">Tiêu đề:</p>
-												<input className='input' type="text" placeholder='Nhập...'/>
+												<input className='input' type="text" placeholder='Nhập...'
+													{...createArticle('title', {required: 'Không được bỏ trống'})}
+													/>
+												{errors.title && <p className='text-danger'>{errors.title.message}</p>}
 												<p className="label mt-3">Miêu tả ngắn:</p>
-												<input className='input' type="text" placeholder='Nhập...' />
+												<input className='input' type="text" placeholder='Nhập...' 
+													{...createArticle('description', { required: "Không được bỏ trống" })}/>
+												{errors.description && <p className='text-danger'>{errors.description.message}</p>}
+												<div className="row">
+													<p className="label">Danh mục</p>
+													<div className="col-6">
+														<select name="parent" onChange={changeSubCat}>
+															{parentCat.map((value, index) => (
+																<option key={index} value={value.id}>{value.name}</option>
+															))}
+														</select>
+													</div>
+													<div className="col-6">
+														<select name="sub" 
+															{...createArticle('category_id')} defaultValue={subCat[0]?.id}>
+															{subCat.map((value, index) => (
+																<option key={index} value={value.id}>{value.name}</option>
+															))}
+														</select>
+													</div>
+												</div>
 											</div>
 											<div className="col-6 choose-file">
 												{image ? <img
@@ -68,14 +133,17 @@ export const User = () => {
 														src="https://th.bing.com/th/id/R.ce69802fa9491f30d42e6a43e0cb1a39?rik=nWge2butlHUpWw&pid=ImgRaw&r=0"
 														alt="" />}
 											
-												
-												<input className='file' type="file" onChange={handleImageChange} />
+													<input type="file" className='file' onChange={handleImageChange}
+													{...createArticle('image', { required: "Vui lòng chọn ảnh" })}/>
+												{errors.image && <p className='text-danger'>{errors.image.message}</p>}
 											</div>
 										</div>
 										<div className="row">
 											<div className="col-12">
 												<p className="label">Nội dung:</p>
-												<textarea className='input' type="text"placeholder='Nhập...' />
+												<textarea className='input' type="text"placeholder='Nhập...' 
+													{...createArticle('detail', {required: "Không được bỏ trống"})}/>
+												{errors.detail && <p className='text-danger'>{errors.detail.message}</p>}
 											</div>
 											
 										</div>

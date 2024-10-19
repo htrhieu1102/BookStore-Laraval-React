@@ -18,10 +18,14 @@ export const Register = () => {
 			password: passwordRef.current.value,
 			password_confirmation: passwordConfirmRef.current.value,
 		}
+		console.log(payload);
+		
 		axiosClient.post('/signup', payload)
 			.then(({data})=> {
 				setUser(data.user)
 				setToken(data.token)
+				console.log(data);
+				
 			}) 
 			.catch(err => {
 				const respone = err.respone
@@ -29,6 +33,8 @@ export const Register = () => {
 					console.log(respone.data.errors);
 					
 				}
+				console.log(err);
+				
 			})
 		
 	}

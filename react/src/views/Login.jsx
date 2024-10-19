@@ -1,9 +1,10 @@
 import { useRef } from 'react';
 import { Form, Button } from 'react-bootstrap'
 import axiosClient from '../axios-client';
+import { useStateConText } from '../contexts/ContextProvider';
 
 export const Login = () => {
-
+	const { setUser, setToken } = useStateConText();
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	console.log('start');
@@ -20,6 +21,8 @@ export const Login = () => {
 			.then(({ data }) => {
 				setUser(data.user)
 				setToken(data.token)
+				console.log(data);
+				
 			})
 			.catch(err => {
 				const respone = err.respone

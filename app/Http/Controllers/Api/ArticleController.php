@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ArticleController extends Controller
@@ -27,9 +28,12 @@ class ArticleController extends Controller
         //
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
-        if (empty($data['published_at'])) {
-            $data['published_at'] = now();
+        $userId = Auth::id();
+        if ($userId === null) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
+        $data['author_id'] = $userId;
+        $data['status_id'] = 1;
         $article = Article::create([
             'title' => $data['title'],
             'slug' => $data['slug'],
@@ -39,7 +43,6 @@ class ArticleController extends Controller
             'author_id' => $data['author_id'],
             'status_id' => $data['status_id'],
             'category_id' => $data['category_id'],
-            'published_at' => $data['published_at'],
         ]);
         return response()->json($article);
     }

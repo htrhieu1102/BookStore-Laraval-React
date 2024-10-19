@@ -26,15 +26,21 @@ class AuthController extends Controller
     }
     public function signup(SignupRequest $request) {
         $data = $request->validated();
-        /** @var  User*/
-        $user =  User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password'])
-        ]);
+        try {
+            /** @var User */
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password'])
+            ]);
 
-        $token = $user->createToken('main')->plainTextToken;
-        return response(compact('user', 'token'));
+            $token = $user->createToken('main')->plainTextToken;
+
+            return response(compact('user', 'token'));
+        } catch (\Exception $e) {
+            // Bắt lỗi và trả về thông báo lỗi
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
 
     }
     public function logout(Request $request) {

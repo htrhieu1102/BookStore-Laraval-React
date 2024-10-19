@@ -26,10 +26,7 @@ class StoreArticleRequest extends FormRequest
             'description' => 'required',
             'detail' => 'required',
             'image' => 'required|string',
-            'author_id' => 'required|exists:users,id',
-            'status_id' => 'required|exists:statuses,id',
             'category_id' => 'required|exists:categories,id',
-            'published_at' => 'nullable|date',
         ];
     }
 }

@@ -17,7 +17,6 @@ class Article extends Model
         'author_id',
         'status_id',
         'category_id',
-        'published_at',
     ];
 
     public function author() 

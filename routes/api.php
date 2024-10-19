@@ -17,13 +17,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function() {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::apiResource('articles', ArticleController::class);
+
 });
 Route::apiResource('categories', CategoryController::class);
-Route::apiResource('articles', ArticleController::class);
+
 
 Route::get('cats-with-children', [CategoryController::class, 'getCategorisWithChildren']);
 Route::post('/signup', [AuthController::class, 'signup'] );
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
