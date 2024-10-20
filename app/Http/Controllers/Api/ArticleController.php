@@ -54,7 +54,14 @@ class ArticleController extends Controller
     {
         //
     }
+    public function showWithSlug(string $slug) {
+        $article = Article::with('category.parent')->where('slug', $slug)->first();
+        if (!$article) {
+            return response()->json(['message' => 'Article not found'], 404);
+        }
+        return response()->json($article);
 
+    }
     /**
      * Update the specified resource in storage.
      */

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ArticleController;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +28,7 @@ Route::middleware('auth:sanctum')->group(function() {
 });
 Route::apiResource('categories', CategoryController::class);
 
-
+Route::get('/articles/detail/{slug}', [ArticleController::class, 'showWithSlug']);
 Route::get('cats-with-children', [CategoryController::class, 'getCategorisWithChildren']);
 Route::post('/signup', [AuthController::class, 'signup'] );
 Route::post('/login', [AuthController::class, 'login']);
