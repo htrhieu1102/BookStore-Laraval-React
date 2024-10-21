@@ -6,6 +6,7 @@ import { Register } from './views/Register';
 import { Home } from './views/Home';
 import { Detail } from './views/Detail';
 import { User } from './views/User';
+import { Category } from './views/Category';
 
 const router = createBrowserRouter([
 	{
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
 			{path: '/login', element: <Login/>},
 			{path: 'register', element: <Register/>},
 			{ path: 'user', element: <User /> },
+			{path: '/category/:slug', element: <Category/>}
 		]
 	}
 ])

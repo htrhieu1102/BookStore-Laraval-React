@@ -4,7 +4,7 @@ import {Nav, Tab} from 'react-bootstrap'
 import BackToTopButton from "../components/BackToTopButton";
 import '../assets/css/style.css'
 import axiosClient from "../axios-client";
-import { convertDate } from "../untils/DateUtils";
+import { convertDate } from "../utils/DateUtils";
 export const Detail = () => {
 	const { slug } = useParams();
 	const [key, setKey] = useState('home');
@@ -13,8 +13,7 @@ export const Detail = () => {
 	const apiDetail = async () => {
 		await axiosClient.get(`/articles/detail/${slug}`)
 		.then(({data})=> {
-			setArticle(data)
-			
+			setArticle(data)			
 		})
 		.catch(error => {
 			console.log(error);
@@ -23,8 +22,6 @@ export const Detail = () => {
 	}
 	useEffect(()=> {
 		apiDetail();
-		console.log(article);
-		
 	},[])
 	console.log(article);
 	

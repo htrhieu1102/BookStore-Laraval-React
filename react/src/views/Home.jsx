@@ -33,7 +33,8 @@ export const Home= () =>  {
 					</div>
 				</div>
 				<div className="section__featured-sub col-2">
-
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7847689041216962"
+						crossorigin="anonymous"></script>
 				</div>
 			</div>
 			<div className="section__main-container row pt-4 container">
