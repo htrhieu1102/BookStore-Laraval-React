@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -14,9 +15,11 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::paginate(5);
+        $orderBy = $request->get("sort_by","id");
+        $sortOrder = $request->get("sort_order","asc");
+        $articles = Article::orderBy($orderBy, $sortOrder)->paginate(10);
         return response()->json($articles);
     }
 

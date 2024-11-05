@@ -23,12 +23,15 @@ Route::middleware('auth:sanctum')->group(function() {
         return $request->user();
     });
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::apiResource('articles', ArticleController::class);
+    Route::post('/articles', [ArticleController::class,'store']);
 
 });
+Route::apiResource('articles', ArticleController::class)->except('store');
 Route::apiResource('categories', CategoryController::class);
 
 Route::get('/articles/detail/{slug}', [ArticleController::class, 'showWithSlug']);
 Route::get('cats-with-children', [CategoryController::class, 'getCategorisWithChildren']);
+Route::get('category/{slug}', [CategoryController::class, 'getArticleByCategory']);
+
 Route::post('/signup', [AuthController::class, 'signup'] );
 Route::post('/login', [AuthController::class, 'login']);

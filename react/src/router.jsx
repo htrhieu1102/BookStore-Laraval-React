@@ -7,6 +7,7 @@ import { Home } from './views/Home';
 import { Detail } from './views/Detail';
 import { User } from './views/User';
 import { Category } from './views/Category';
+import { AdminPage } from './admin/AdminPage';
 
 const router = createBrowserRouter([
 	{
@@ -19,8 +20,12 @@ const router = createBrowserRouter([
 			{path: '/login', element: <Login/>},
 			{path: 'register', element: <Register/>},
 			{ path: 'user', element: <User /> },
-			{path: '/category/:slug', element: <Category/>}
+			{path: '/category/:parentSlug/:childSlug?', element: <Category/>}
 		]
+	},
+	{
+		path: '/admin/*',
+		element : <AdminPage/>
 	}
 ])
 export default router;

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
@@ -52,5 +53,25 @@ class CategoryController extends Controller
     {
         $categories = Category::with('children')->where('parent_id', null)->get();
         return response()->json($categories);
+    }
+    public function getArticleByCategory($slug)
+    {
+        $category = Category::with('articles.category', 'children.articles.category', 'parent')
+            ->where('slug', $slug)->first();
+        
+        if (!$category) {
+            return response()->json(['message'=> "Category not found"], 404);
+        }
+        if ($category->parent_id != null) {
+            $category->setRelation('articles', $category->articles->sortByDesc('updated_at')->values());
+            return response()->json($category);
+        } else {
+            $articlesChild = $category->children->flatMap(function ($child) {
+                return $child->articles; // Lấy articles từ từng child
+            });
+            $category->setRelation('articles', $category->articles->merge($articlesChild)->sortByDesc('updated_at')->values());
+            return response()->json($category);
+        }
+        
     }
 }

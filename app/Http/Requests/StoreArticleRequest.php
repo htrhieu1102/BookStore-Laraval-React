@@ -21,6 +21,7 @@ class StoreArticleRequest extends FormRequest
      */
     public function rules(): array
     {
+        
         return [
             'title' => 'required|string|max:50|unique:articles,title',
             'description' => 'required',

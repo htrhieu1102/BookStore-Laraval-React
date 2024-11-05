@@ -28,9 +28,8 @@ class SignupRequest extends FormRequest
             'password'=>[
                 'required',
                 'confirmed',
-                Password::min(8)
+                Password::min(6)
                 ->letters()
-                // ->symbols()
             ]
         ];
     }
